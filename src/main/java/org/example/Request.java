@@ -21,9 +21,17 @@ public class Request {
                 Integer.parseInt(dates[1])-1,Integer.parseInt(dates[0]));
         Date d=new Date(calendar.getTimeInMillis());
         java.sql.Date sqlDate=new java.sql.Date(d.getTime());
-        PreparedStatement statement=connection.prepareStatement("Insert Into owner values (default, ?, ?)");
-        statement.setString(1,name);
-        statement.setDate(2, sqlDate);
-        statement.executeUpdate();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement statement = connection.prepareStatement("Insert Into owner values (default, ?, ?)");
+            statement.setString(1, name);
+            statement.setDate(2, sqlDate);
+            statement.executeUpdate();
+            connection.commit();
+        }
+        catch (Exception e){
+            connection.rollback();
+        }
     }
+
 }
