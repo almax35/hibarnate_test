@@ -1,8 +1,6 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -31,6 +29,42 @@ public class Request {
         }
         catch (Exception e){
             connection.rollback();
+        }
+    }
+
+    public static int deleteOwner() throws SQLException{
+        Connection connection=ConnectionToDB.getConnection();
+        Statement statement= connection.createStatement();
+        Scanner scanner =new Scanner(System.in);
+        String columnName=null;
+        boolean flag=false;
+        while (!flag){
+            System.out.println("Введите наименование параметра, который вы ходите удалить: ");
+            columnName=scanner.nextLine().toLowerCase();
+            ResultSet rs = statement.executeQuery("SELECT * FROM owner");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for (int i=1; i<=rsmd.getColumnCount(); i++){
+                if (columnName.equals(rsmd.getColumnName(i).toLowerCase())){
+                    flag=true;
+                }
+            }
+        }
+        while (true) {
+            System.out.println("Введите значение параметра для удаления");
+            String value = scanner.nextLine();
+            try {
+                connection.setAutoCommit(false);
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from owner where " + columnName + " = ?");
+                preparedStatement.setString(1, value);
+                int changes = preparedStatement.executeUpdate();
+                if (changes != 0) {
+                    connection.commit();
+                    return changes;
+                }
+            }
+            catch (Exception e){
+                connection.rollback();
+            }
         }
     }
 
