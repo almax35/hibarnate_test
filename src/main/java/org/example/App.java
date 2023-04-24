@@ -10,6 +10,7 @@ public class App
 {
     public static void main( String[] args ) throws SQLException {
        // Request.addOwner();
-        Request.deleteOwner();
+       // Request.deleteOwner();
+        Request.printCar();
     }
 }

@@ -1,5 +1,9 @@
 package org.example;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.io.IOException;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,6 +69,17 @@ public class Request {
             catch (Exception e){
                 connection.rollback();
             }
+        }
+    }
+
+    public static void printCar() {
+        try (Session session = MySession.getConfiguration().openSession()) {
+            Query<Car> query = session.createQuery(" from Car", Car.class);
+            for (Car car: query.list()){
+                System.out.println(car.toString());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
