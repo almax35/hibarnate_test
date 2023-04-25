@@ -1,4 +1,6 @@
-package org.example;
+package org.example.utils;
+import org.example.models.Car;
+import org.example.models.Owner;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
@@ -15,6 +17,7 @@ public class MySession {
         SessionFactory sessionFactory = new Configuration()
                 .addProperties(prop)
                 .addAnnotatedClass(Car.class)
+                .addAnnotatedClass(Owner.class)
                 .buildSessionFactory();
 
       return sessionFactory;

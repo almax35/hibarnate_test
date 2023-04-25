@@ -1,4 +1,4 @@
-package org.example;
+package org.example.models;
 
 import jakarta.persistence.*;
 
@@ -11,15 +11,19 @@ public class Car {
     private int idCar;
     @Column(name="cost")
     private int cost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idOwner")
     @Column(name="idOwner")
-    private int ownerId;
+    private Owner owner;
+
 
     @Override
     public String toString() {
         return "Car{" +
                 "idCar=" + idCar +
                 ", cost=" + cost +
-                ", ownerId=" + ownerId +
+                ", owner=" + owner.getName() +
                 '}';
     }
 }
