@@ -14,7 +14,6 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idOwner")
-    @Column(name="idOwner")
     private Owner owner;
 
 
