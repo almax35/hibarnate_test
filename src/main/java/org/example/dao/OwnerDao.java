@@ -1,7 +1,13 @@
 package org.example.dao;
 
+import org.example.models.Owner;
 import org.example.utils.ConnectionToDB;
+import org.example.utils.MySession;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +72,28 @@ public class OwnerDao {
             } catch (Exception e) {
                 connection.rollback();
             }
+        }
+    }
+
+
+    public static void updateOwner(Owner owner){
+        try(Session session= MySession.getConfiguration().openSession()){
+            Transaction tx1 = session.beginTransaction();
+            session.update(owner);
+            tx1.commit();
+
+        }
+        catch (IOException e){
+
+        }
+
+    }
+    public static void printOwner(){
+        try(Session session=MySession.getConfiguration().openSession()){
+            session.createQuery("from Owner", Owner.class);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
