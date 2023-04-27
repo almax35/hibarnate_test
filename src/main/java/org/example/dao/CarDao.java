@@ -46,7 +46,16 @@ public class CarDao {
         }
     }
 
-    public static void updateCar(){
+    public static void updateCar(Car car){
+        try(Session session=MySession.getConfiguration().openSession()){
+            Transaction trx= session.beginTransaction();
+            session.update(car);
+            trx.commit();
+            session.close();
+        }
+        catch (IOException e){
+
+        }
 
     }
 }
