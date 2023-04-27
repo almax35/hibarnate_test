@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name="car", schema="new_schema")
 public class Car {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idCar")
     private int idCar;
     @Column(name="cost")
@@ -16,6 +16,19 @@ public class Car {
     @JoinColumn(name = "idOwner")
     private Owner owner;
 
+
+    public Car(int cost, Owner owner) {
+        this.cost = cost;
+        this.owner = owner;
+    }
+
+    public Car() {
+
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
 
     @Override
     public String toString() {

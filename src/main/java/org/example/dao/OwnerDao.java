@@ -96,4 +96,8 @@ public class OwnerDao {
             throw new RuntimeException(e);
         }
     }
+
+    public static Owner findOwnerById(int index) throws IOException{
+        return MySession.getConfiguration().openSession().get(Owner.class,index);
+    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name="owner", schema="new_schema")
 public class Owner {
    @Id
-   @GeneratedValue
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column (name="idOwner")
    private int idOwner;
    @Column (name="name")
@@ -18,7 +18,7 @@ public class Owner {
    @Column(name="birthday")
     private Date birthday;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Car> autos;
+    private List<Car> cars;
 
 
 
@@ -32,16 +32,19 @@ public class Owner {
                 "idOwner=" + idOwner +
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
-                ", autos=" + autos +
+                ", autos=" + cars +
                 '}';
     }
     public Owner() {
 
     }
 
-    public Owner(int idOwner, String name, Date birthday) {
-        this.idOwner = idOwner;
+    public Owner( String name, Date birthday) {
         this.name = name;
         this.birthday = birthday;
+    }
+
+    public Owner(int idOwner) {
+        this.idOwner = idOwner;
     }
 }
